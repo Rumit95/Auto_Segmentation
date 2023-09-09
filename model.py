@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from torch import tensor
-from torchinfo import summary
 import torch.nn.functional as F
 
 class Conv2dNormActivation(nn.Module):

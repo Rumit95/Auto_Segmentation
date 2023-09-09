@@ -78,6 +78,7 @@ async def image_process(file: UploadFile):
         mask_cv = cv2.imread("static/Results/mask.png", cv2.IMREAD_GRAYSCALE)
 
         kernel = np.ones((3, 3), np.uint8) 
+        
         eroded_mask = cv2.erode(mask_cv, kernel, iterations=1)
     
         binary_mask = cv2.adaptiveThreshold(eroded_mask,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
