@@ -4,7 +4,7 @@ This project demonstrates semantic image segmentation using a custom architectur
 
 ## Machine Learning Model Overview
 
-`[MobileNetV2 - Unet](https://github.com/Rumit95/Semantic-Segmentation-of-Image)`
+[`MobileNetV2 - Unet`](https://github.com/Rumit95/Semantic-Segmentation-of-Image)
 
 ## Project Overview
 
