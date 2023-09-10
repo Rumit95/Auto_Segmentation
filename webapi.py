@@ -39,21 +39,14 @@ preprocess_X = transforms.Compose([
 #             transforms.ToTensor(),
 #             transforms.Normalize(mean=(0),std=(1))])
 
-def apply_mask(input_image, mask_image, blur_amount=500, mask_opacity=0.25):
+def apply_mask(input_image, mask_image):
 
-    inverted_bw_mask = 255 - mask_image
-    kernel = np.ones((2, 2), np.uint8) 
+    mask_3channel = cv2.cvtColor(mask_image, cv2.COLOR_GRAY2BGR)
+    mask_3channel_resized = cv2.resize(mask_3channel, (input_image.shape[1], input_image.shape[0]))
+    output_white = cv2.addWeighted(input_image, 1, 255-mask_3channel_resized, 0.5, 0)
+    output_black = cv2.bitwise_and(input_image, mask_3channel_resized)
 
-    img_dilation = cv2.dilate(inverted_bw_mask, kernel, iterations=1)
-    whole_blurred = cv2.GaussianBlur(input_image, (15, 15), blur_amount)
-
-    mask_3channel = cv2.cvtColor(img_dilation, cv2.COLOR_GRAY2BGR)
-    mask_3channel_resized = cv2.resize(mask_3channel, (whole_blurred.shape[1], whole_blurred.shape[0]))
-
-    blurred_on_mask = cv2.addWeighted(input_image, 1, whole_blurred, 0, 0)
-    output_image = cv2.addWeighted(blurred_on_mask, 1, mask_3channel_resized, mask_opacity, 0)
-
-    return output_image
+    return output_white,output_black
 
 # @app.get("/")
 # async def start():
@@ -81,15 +74,12 @@ async def image_process(file: UploadFile):
         input_image_cv = cv2.imread("static/Results/input.png")
         mask_cv = cv2.imread("static/Results/mask.png", cv2.IMREAD_GRAYSCALE)
 
-        #eroded_mask = cv2.erode(mask_cv, kernel, iterations=1)
-        #img_dilation = cv2.dilate(mask_cv, kernel, iterations=1)
-
         binary_mask = cv2.adaptiveThreshold(mask_cv,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
-        #_, binary_mask = cv2.threshold(mask_cv, threshold_value, 255, cv2.THRESH_BINARY)
   
-        output_image_cv = apply_mask(input_image_cv, binary_mask, mask_opacity=0.5, blur_amount=500)
-    
-        cv2.imwrite("static/Results/output.png", output_image_cv)
+        output_image_white, output_image_black = apply_mask(input_image_cv, binary_mask)
+
+        cv2.imwrite("static/Results/output_b.png", output_image_black)
+        cv2.imwrite("static/Results/output_w.png", output_image_white)
 
         return {"message": "Image uploaded and processed successfully"}
     except Exception as e:
