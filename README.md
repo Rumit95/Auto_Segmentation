@@ -6,7 +6,9 @@ This project demonstrates semantic image segmentation using a custom architectur
 
 - The core functionality of this project is implemented in the `main.py` and `webapi.py` files. `main.py` contains the code for running the semantic segmentation locally, while `webapi.py` is a Streamlit web application for performing semantic segmentation through a user-friendly interface.
 
-![demo1](https://github.com/Rumit95/Auto_Segmentation/assets/101036708/2962732b-b2f0-494a-85bf-9f25a9018c02)
+
+https://github.com/Rumit95/Auto_Segmentation/assets/101036708/bf15b64f-2b6f-42d9-83b9-36920e5a0624
+
 
 ## Prerequisites
 
