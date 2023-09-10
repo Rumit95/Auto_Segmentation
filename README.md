@@ -2,6 +2,10 @@
 
 This project demonstrates semantic image segmentation using a custom architecture that combines MobileNetV2 and U-Net. The goal is to accurately segment objects in images, showcasing a robust approach to image analysis.
 
+## Machine Learning Model Overview
+
+`[MobileNetV2 - Unet](https://github.com/Rumit95/Semantic-Segmentation-of-Image)`
+
 ## Project Overview
 
 - The core functionality of this project is implemented in the `main.py` and `webapi.py` files. `main.py` contains the code for running the semantic segmentation locally, while `webapi.py` is a Streamlit web application for performing semantic segmentation through a user-friendly interface.
